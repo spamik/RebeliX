@@ -20,9 +20,9 @@ v_corr = 0; //0.65
 
 module x_carriage_base(){
  // Dolni drzak lozisek
- translate([0,-v_corr,0]) rotate([0,0,90]) horizontal_bearing_base(2);
+ //translate([0,-v_corr,0]) rotate([0,0,90]) horizontal_bearing_base(2);
  // Horni drzak lozisek
- translate([0,x_rod_distance,0]) rotate([0,0,90]) horizontal_bearing_base(2);
+ //translate([0,x_rod_distance,0]) rotate([0,0,90]) horizontal_bearing_base(2);
  // Drzak remenu
  translate([-part_width/2,17,0]) cube([part_width,21,17]);
  // Zakladna
@@ -43,13 +43,14 @@ module x_carriage_beltcut()
   // Vyrez pro zbytek remenu
   translate([-3/2,13,10.5]) cube([3,16,15]);
   // Vyrez pro volny pohyb remenu
-  translate([-35,7.5,7]) cube([70,11,15]);
-  translate([-35,0,8.5]) cube([70,11,15]);
-  translate([-35,8,7]) rotate([45,0,0]) cube([70,11,15]);
+  //translate([-35,7.5,7]) cube([70,11,15]);
+  translate([-35,7.5+2.5,7]) cube([70,11-2.5,15]);
+  //translate([-35,0,8.5]) cube([70,11,15]);
+  //translate([-35,8,7]) rotate([45,0,0]) cube([70,11,15]);
   // Vyrez pro remen
   translate([-30,x_rod_distance-17.75+1.5,10.5]) cube([60,0.9,15]); //puvodne 0.8
   // Nabeh pro snadnejsi zasunuti remenu
-  translate([-34,x_rod_distance-17.75+1.8+0.2,16.2]) rotate([45,0,0]) cube([68,15,15]);
+  //translate([-34,x_rod_distance-17.75+1.8+0.2,16.2]) rotate([45,0,0]) cube([68,15,15]);
   // Zuby
     for ( i = [0 : 33] )
     {
@@ -60,7 +61,7 @@ module x_carriage_beltcut()
 module nut_hole(nut_diameter=6.6)
 {
   cylinder(r=nut_diameter/2,h=3,$fn=6,center=true);
-  translate([15/2,0,0]) cube([15,nut_diameter*cos(30),3],center=true);
+  //translate([15/2,0,0]) cube([15,nut_diameter*cos(30),3],center=true);
 	
   translate([0,0,-20/2]) cylinder(r=3.3/2,h=20,$fn=16,center=true);
   translate([0,0,5 + 3/2 + layer_height]) cylinder(r=3.3/2,h=10,$fn=16,center=true);
@@ -69,9 +70,35 @@ module nut_hole(nut_diameter=6.6)
 module x_carriage_holes()
 {
   // Vyrez pro spodni dve LM8UU loziska
-  translate([0,-v_corr,0]) rotate([0,0,90]) horizontal_bearing_holes(2);
+  //translate([0,-v_corr,0]) rotate([0,0,90]) horizontal_bearing_holes(2);
   // Vyrez pro horni dve LM8UU loziska
-  translate([0,x_rod_distance,0]) rotate([0,0,90]) horizontal_bearing_holes(2);
+  //translate([0,x_rod_distance,0]) rotate([0,0,90]) horizontal_bearing_holes(2);
+    
+  // vyrezy pro ulozeni pouzder s loziskama
+  translate([0, -v_corr, 8.5-4.5+5/2]) cube(size=[part_width+2, 22.5, 5], center=true);
+  translate([0, x_rod_distance-1.5/2, 8.5-4.5+20/2]) cube(size=[part_width+2, 22.5+1.5, 20], center=true);
+    
+  // otvory pro prisroubovani pouzder s loziskama
+  // dolni loziska
+  translate([part_width/-2+6, -v_corr, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/-2+6, -v_corr, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/-2+18, -v_corr, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/-2+18, -v_corr, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/2-6, -v_corr, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/2-6, -v_corr, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/2-18, -v_corr, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/2-18, -v_corr, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  // horni loziska
+  translate([part_width/-2+6, x_rod_distance, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/-2+6, x_rod_distance, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/-2+18, x_rod_distance, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/-2+18, x_rod_distance, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/2-6, x_rod_distance, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/2-6, x_rod_distance, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+  translate([part_width/2-18, x_rod_distance, -1]) cylinder(d=3.5, h=20, $fn=100);
+  translate([part_width/2-18, x_rod_distance, -1]) cylinder(d=6.8, h=3.5, $fn=100);
+    
+    
   // Zarez pro pridelani extruderu
   translate([-40,x_rod_distance+12-30,-0.1]) cube([80,4,2.6]);
   // Otvory pro pridelani extruderu
@@ -113,7 +140,7 @@ module x_carriage()
     x_carriage_base();
     x_carriage_beltcut();
     x_carriage_holes();
-    x_carriage_fancy();
+    //x_carriage_fancy();
   }
 }
 

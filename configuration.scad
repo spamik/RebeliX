@@ -22,7 +22,7 @@ extrusion_width = 0.66; //Slic3r->Print Settings->Advanced->Default extrusion wi
 space = 1;
 
 // Prumer hlavy M6 sroubu (pricte se rezerva) [mm]
-M6_head_diameter = 10.6+space;
+M6_head_diameter = 12.5+space;
 //M6_head_diameter = 12+space;
 
 // Prumer M6 sroubu

@@ -7,24 +7,40 @@
 
 bearing_diameter = 15;
 
+module nut(nut_diameter=6.6,nut_height=3){
+	cylinder(r=nut_diameter/2,h=2*nut_height,$fn=6,center=true);
+}
+
 module horizontal_bearing_base(bearings=1){
- translate(v=[0,0,6]) cube(size = [24,4+bearings*24,12], center = true);	
+ translate(v=[0,0,30/2]) cube(size = [20,4+bearings*24,30], center = true);	
 }
 module horizontal_bearing_holes(bearings=1){
  cutter_lenght = 10+bearings*25;
  one_holder_lenght = 8+25;
  holder_lenght = 8+bearings*25;
+    
+ base_size = 4+bearings*24;
  
  // Main bearing cut
- difference(){
+ /*difference(){
   translate(v=[0,0,12+1.5]) rotate(a=[90,0,0]) translate(v=[0,0,-cutter_lenght/2]) cylinder(h = cutter_lenght, r=bearing_diameter/2, $fn=50);
+  
   // Bearing retainers
   translate(v=[0,1.5-holder_lenght/2,3+1.5]) cube(size = [24,6,8], center = true);
   translate(v=[0,-1.5+holder_lenght/2,3+1.5]) cube(size = [24,6,8], center = true);
- }
+ }*/
+ //translate([0, 0, 40]) cube(size=[15/2, cutter_lenght, 50], center=true);
+ /*for (i = [0:bearings-1]) {
+     translate([0, base_size/-2+2+12+i*24, 26]) rotate(a=[90, 0, 90]) cylinder(d=3.3, h=100, $fn=16, center=true);
+     
+     translate([-9, base_size/-2+2+12+i*24, 26]) rotate(a=[90, 0, 90]) nut(6.6, 2.5);
+     
+     translate([9, base_size/-2+2+12+i*24, 26]) rotate(a=[90, 0, 90]) cylinder(d=7, h=5, $fn=32, center=true);
+ }*/
+ 
  
  // Ziptie cutouts
- ziptie_cut_ofset = 0;
+ /*ziptie_cut_ofset = 0;
  for ( i = [0 : bearings-1] ){
   // For easier positioning I move them by half of one 
   // bearing holder then add each bearign lenght and then center again
@@ -35,7 +51,7 @@ module horizontal_bearing_holes(bearings=1){
    }
    translate(v=[0,10,12]) rotate(a=[90,0,0]) translate(v=[0,0,0]) cylinder(h = 24, r=10, $fn=50);
   }
- }
+ }*/
  
 }
 
@@ -66,10 +82,12 @@ module vertical_bearing_base(){
 
 module vertical_bearing_holes(){
   translate(v=[0,0,-1]) cylinder(h = 62, r=bearing_diameter/2, $fn = 60);
-  rotate(a=[0,0,90]) translate(v=[8,0,31.5]) cube(size = [5,1,62], center = true);
+  rotate(a=[0,0,90]) translate(v=[-8.5,0,30.5]) cube(size = [5,3,62], center = true);
 }
 
-difference(){
+/*difference(){
 vertical_bearing_base();
 vertical_bearing_holes();
-}
+}*/
+
+horizontal_bearing_base(2);

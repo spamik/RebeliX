@@ -19,6 +19,35 @@ width = 21;
 
 nut_classic = 0;
 
+module nut(nut_diameter=6.6,nut_height=3){
+	cylinder(r=nut_diameter/2,h=2*nut_height,$fn=6,center=true);
+}
+
+module bearing_tighter(nuthead=false) {
+    difference() {
+        cube(size=[13, 5, height], center=true);
+        translate([2.5, -1.4, height/2-height/8]) rotate(a=[90, 0, 0]) cylinder(d=3.3, h=5*2, $fn=16, center=true);
+        translate([2.5, -1.4, height/2-3*height/8]) rotate(a=[90, 0, 0]) cylinder(d=3.3, h=5*2, $fn=16, center=true);
+        translate([2.5, -1.4, height/2-5*height/8]) rotate(a=[90, 0, 0]) cylinder(d=3.3, h=5*2, $fn=16, center=true);
+        translate([2.5, -1.4, height/2-7*height/8]) rotate(a=[90, 0, 0]) cylinder(d=3.3, h=5*2, $fn=16, center=true);
+        
+        if(nuthead) {
+            translate([2.5, -2.4, height/2-height/8]) rotate(a=[90, 30, 0]) nut(6.6, 1.4);
+            translate([2.5, -2.4, height/2-3*height/8]) rotate(a=[90, 30, 0]) nut(6.6, 1.4);
+            translate([2.5, -2.4, height/2-5*height/8]) rotate(a=[90, 30, 0]) nut(6.6, 1.4);
+            translate([2.5, -2.4, height/2-7*height/8]) rotate(a=[90, 30, 0]) nut(6.6, 1.4);
+            
+        } else {
+            translate([2.5, 3, height/2-height/8]) rotate(a=[90, 0, 0]) cylinder(d=7, h=5, $fn=32, center=true);
+            translate([2.5, 3, height/2-3*height/8]) rotate(a=[90, 0, 0]) cylinder(d=7, h=5, $fn=32, center=true);
+            translate([2.5, 3, height/2-5*height/8]) rotate(a=[90, 0, 0]) cylinder(d=7, h=5, $fn=32, center=true);
+            translate([2.5, 3, height/2-7*height/8]) rotate(a=[90, 0, 0]) cylinder(d=7, h=5, $fn=32, center=true);
+        }
+        
+    }
+ 
+}
+
 module x_end_base(){
   // Hlavni blok
   translate([-12,-20,height/2]) cube([width,25,height], center = true);	
@@ -31,6 +60,9 @@ module x_end_base(){
   } else{   
     translate(v=[-4,-17,0]) rotate([0,0,30]) cylinder(h = 3+4+3, r=12, $fn = 6);
   }
+  // packy s dirama pro stazeni pouzdra okolo lozisek
+  translate([0, -4, height/2]) bearing_tighter(nuthead=true);
+  translate([0, 4, height/2]) bearing_tighter();
   }
 
 module x_end_holes(){
